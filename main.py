@@ -31,14 +31,17 @@ class DrawInformation:
 
 def draw(draw_info):
     draw_info.window.fill(draw_info.BACKGROUND_COLOR)
-    pygame.display.update()
+    draw_list(draw_info)
 
 def draw_list(draw_info):
     lst = draw_info.lst
-
     for i, value in enumerate(lst):
         x = draw_info.start_x + i * draw_info.block_width
-        y = draw_info.height - (value - draw_info.min_value) * draw_info.block_height
+        height = (value - draw_info.min_value) * draw_info.block_height
+        y = draw_info.height - height
+        color = draw_info.GRADIENTS[i % 3]
+        pygame.draw.rect(draw_info.window, color, (x, y, draw_info.block_width, height))
+
 def generate_starting_list(size):
     lst = [random.randint(0, size) for _ in range(size)]
     return lst
